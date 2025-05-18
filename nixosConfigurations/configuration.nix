@@ -55,15 +55,6 @@
     extraGroups = [ "wheel" "networkmanager" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    wget
-    brave
-    ffmpeg
-    mediamtx
-    vlc
-    qbittorrent
-  ];
-
   # List services that you want to enable:
   services.mediamtx = {
     enable = true;
