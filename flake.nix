@@ -24,7 +24,7 @@
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
 
-    nixosModules = import ./nixosModules/default.nix;
+    nixosModules = import ./nixosModules;
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#nixos'
