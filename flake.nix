@@ -1,40 +1,25 @@
 {
-  description = "Your new nix config";
-
+  description = "";
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "flake:nixpkgs/nixpkgs-unstable";
   };
-
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    # Supported systems for your flake packages, shell, etc.
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-
-    forAllSystems = nixpkgs.lib.genAttrs systems;
-  in {
-
-    nixosModules = import ./nixosModules/default.nix;
-
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#nixos'
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./nixosConfigurations/default.nix
-        ];
+  outputs = inputs:
+    let
+      flakeContext = {
+        inherit inputs;
+      };
+    in
+    {
+      nixosConfigurations = {
+        nixos = import ./nixosConfigurations/nixos.nix flakeContext;
+      };
+      nixosModules = {
+        default = import ./nixosModules/default.nix flakeContext;
+        hardware = import ./nixosModules/hardware.nix flakeContext;
+        mediamtx = import ./nixosModules/mediamtx.nix flakeContext;
+        nvidia = import ./nixosModules/nvidia.nix flakeContext;
+        packages = import ./nixosModules/packages.nix flakeContext;
+        steam = import ./nixosModules/steam.nix flakeContext;
       };
     };
-  };
 }
