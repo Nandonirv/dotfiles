@@ -1,4 +1,8 @@
-{
-  nvidia = import ./nvidia.nix;
-  packages = import ./packages.nix;
+{ config, lib, pkgs, ... }:
+{  
+  imports =
+    [
+      ./nvidia.nix
+      ./packages.nix
+    ];
 }
