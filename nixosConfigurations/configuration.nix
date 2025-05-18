@@ -72,6 +72,9 @@
     };
   };   
 
+  # Enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Disable the firewall altogether.
   networking.firewall.enable = false;
 
